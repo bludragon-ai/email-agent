@@ -1,0 +1,112 @@
+[
+  {
+    "id": "e001",
+    "thread_id": "t001",
+    "from_addr": "cto@acmecorp.com",
+    "to_addr": "you@example.com",
+    "subject": "URGENT: Production database is down",
+    "body": "Hey,\n\nThe production Postgres cluster went offline at 03:12 UTC. All services returning 500s. We need the on-call DBA to restore from the latest snapshot ASAP. Customer-facing impact confirmed.\n\nPlease acknowledge and give an ETA for recovery.\n\n— Marcus, CTO",
+    "date": "2026-02-17T03:15:00Z",
+    "is_read": false,
+    "labels": ["inbox"]
+  },
+  {
+    "id": "e002",
+    "thread_id": "t001",
+    "from_addr": "dba@acmecorp.com",
+    "to_addr": "cto@acmecorp.com",
+    "subject": "Re: URGENT: Production database is down",
+    "body": "Marcus,\n\nI'm on it. Snapshot restore initiated — ETA ~25 minutes. Will switch traffic to the read replica in the meantime to restore partial service.\n\nWill update in 15.\n\n— Priya",
+    "date": "2026-02-17T03:22:00Z",
+    "is_read": false,
+    "labels": ["inbox"]
+  },
+  {
+    "id": "e003",
+    "thread_id": "t002",
+    "from_addr": "sarah@clientco.io",
+    "to_addr": "you@example.com",
+    "subject": "Q1 deliverables timeline",
+    "body": "Hi,\n\nCould you share an updated timeline for the Q1 deliverables? Our board meeting is March 5 and I need to present progress. Specifically interested in:\n\n1. API v2 migration status\n2. Dashboard redesign\n3. Mobile app beta date\n\nThanks,\nSarah Chen\nVP Product, ClientCo",
+    "date": "2026-02-16T14:30:00Z",
+    "is_read": true,
+    "labels": ["inbox", "client"]
+  },
+  {
+    "id": "e004",
+    "thread_id": "t003",
+    "from_addr": "hr@acmecorp.com",
+    "to_addr": "all@acmecorp.com",
+    "subject": "Office closed Monday Feb 23 — Presidents' Day",
+    "body": "Hi team,\n\nJust a reminder that the office will be closed on Monday, February 23 for Presidents' Day. Enjoy the long weekend!\n\nIf you have any PTO questions, reach out to HR.\n\nBest,\nHR Team",
+    "date": "2026-02-14T09:00:00Z",
+    "is_read": true,
+    "labels": ["inbox"]
+  },
+  {
+    "id": "e005",
+    "thread_id": "t004",
+    "from_addr": "noreply@techdigest.com",
+    "to_addr": "you@example.com",
+    "subject": "🚀 This Week in AI: GPT-5 rumors, new robotics breakthroughs",
+    "body": "TECH DIGEST WEEKLY — Feb 17, 2026\n\n📰 TOP STORIES\n\n1. GPT-5 Training Reportedly Complete\nSources close to OpenAI suggest GPT-5 has finished training and is entering safety evaluation. Expected capabilities include...\n\n2. Boston Dynamics Announces Household Robot\nThe Atlas-Home platform will retail at $24,999 and handle basic household tasks...\n\n3. EU AI Act Enforcement Begins\nFirst penalties issued under the EU AI Act, targeting non-compliant facial recognition systems...\n\n— Unsubscribe: https://techdigest.com/unsub",
+    "date": "2026-02-17T06:00:00Z",
+    "is_read": false,
+    "labels": ["inbox", "newsletter"]
+  },
+  {
+    "id": "e006",
+    "thread_id": "t005",
+    "from_addr": "prince.nigerian@totallylegit.ng",
+    "to_addr": "you@example.com",
+    "subject": "CONGRATULATIONS! You've Won $4,500,000",
+    "body": "Dear Beloved,\n\nI am Prince Abubakar of Nigeria. My late father left $4,500,000 in a security vault and I need a trusted foreign partner to help transfer the funds. You will receive 30% ($1,350,000) for your assistance.\n\nPlease send your full name, address, bank account number, and a copy of your passport to proceed.\n\nGod bless,\nPrince Abubakar",
+    "date": "2026-02-17T11:45:00Z",
+    "is_read": false,
+    "labels": ["inbox"]
+  },
+  {
+    "id": "e007",
+    "thread_id": "t006",
+    "from_addr": "mike@designstudio.co",
+    "to_addr": "you@example.com",
+    "subject": "Invoice #2847 — Feb design work",
+    "body": "Hi,\n\nPlease find attached Invoice #2847 for February design work:\n\n- Landing page redesign: $3,200\n- Icon set (48 icons): $1,800\n- Brand guide updates: $900\n\nTotal: $5,900\nDue: March 1, 2026\n\nPayment via ACH to the account on file. Let me know if you have questions.\n\nThanks,\nMike Torres\nDesign Studio Co.",
+    "date": "2026-02-15T16:20:00Z",
+    "is_read": false,
+    "labels": ["inbox"]
+  },
+  {
+    "id": "e008",
+    "thread_id": "t007",
+    "from_addr": "jira@acmecorp.atlassian.net",
+    "to_addr": "you@example.com",
+    "subject": "[JIRA] ACME-1234 moved to Code Review",
+    "body": "Priya Sharma moved ACME-1234 \"Implement rate limiting middleware\" to Code Review.\n\nAssignee: You\nPriority: High\nSprint: Sprint 24\n\nPlease review the PR at https://github.com/acmecorp/api/pull/567\n\n— Jira Bot",
+    "date": "2026-02-17T10:05:00Z",
+    "is_read": false,
+    "labels": ["inbox"]
+  },
+  {
+    "id": "e009",
+    "thread_id": "t008",
+    "from_addr": "alex@acmecorp.com",
+    "to_addr": "you@example.com",
+    "subject": "Lunch tomorrow?",
+    "body": "Hey!\n\nWant to grab lunch tomorrow? Thinking that new ramen place on 5th. I heard their tonkotsu is incredible.\n\nLet me know!\n— Alex",
+    "date": "2026-02-17T18:30:00Z",
+    "is_read": false,
+    "labels": ["inbox"]
+  },
+  {
+    "id": "e010",
+    "thread_id": "t009",
+    "from_addr": "security@github.com",
+    "to_addr": "you@example.com",
+    "subject": "Dependabot alert: critical vulnerability in lodash < 4.17.21",
+    "body": "A critical severity vulnerability was found in lodash (npm) used by acmecorp/dashboard.\n\nVulnerability: Prototype Pollution\nSeverity: Critical (CVSS 9.8)\nAffected: lodash < 4.17.21\nFix: Upgrade to lodash >= 4.17.21\n\nView alert: https://github.com/acmecorp/dashboard/security/dependabot/1\n\n— GitHub Security",
+    "date": "2026-02-17T08:00:00Z",
+    "is_read": false,
+    "labels": ["inbox"]
+  }
+]
