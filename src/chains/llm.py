@@ -16,10 +16,14 @@ def get_llm() -> BaseChatModel:
     if provider == "openai":
         from langchain_openai import ChatOpenAI
 
-        return ChatOpenAI(
+        kwargs = dict(
             model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
             temperature=temperature,
         )
+        base_url = os.getenv("OPENAI_BASE_URL", "")
+        if base_url:
+            kwargs["base_url"] = base_url
+        return ChatOpenAI(**kwargs)
 
     # default: anthropic
     from langchain_anthropic import ChatAnthropic
