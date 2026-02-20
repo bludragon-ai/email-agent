@@ -13,7 +13,7 @@ lint:
 	ruff check src/ tests/
 
 run:
-	streamlit run src/ui/app.py
+	streamlit run src/ui/app.py --server.port=8503
 
 docker-up:
 	docker compose up --build -d

@@ -59,3 +59,15 @@ class DraftReply(BaseModel):
     body: str
     tone: str = "professional"
     confidence: float = Field(default=0.0, ge=0.0, le=1.0)
+
+
+class ColdOutreachEmail(BaseModel):
+    """AI-generated cold outreach email."""
+
+    target: str
+    goal: str
+    tone: str = "professional"
+    subject: str
+    body: str
+    hook: str = ""
+    cta: str = ""

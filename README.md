@@ -1,6 +1,6 @@
 # 📧 Email Agent
 
-AI-powered email management agent that triages, categorizes, summarizes, and drafts replies to your emails using LLMs.
+AI-powered email management agent that triages, categorizes, summarizes, drafts replies, and generates cold outreach emails using Claude.
 
 ![Python](https://img.shields.io/badge/python-3.11+-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -12,6 +12,7 @@ AI-powered email management agent that triages, categorizes, summarizes, and dra
 - **Priority scoring** — 5-level priority ranking (critical → minimal)
 - **Thread summarization** — Condenses multi-message threads into key points
 - **Smart reply drafting** — Generates contextual replies with tone selection (professional, friendly, formal, concise, apologetic)
+- **Cold outreach generator** — Crafts personalized cold emails given a target, context, and goal
 - **Pluggable providers** — Local JSON demo store included; Gmail/IMAP interface ready to implement
 - **Multi-LLM support** — Anthropic Claude (default) or OpenAI GPT via environment config
 
@@ -20,7 +21,7 @@ AI-powered email management agent that triages, categorizes, summarizes, and dra
 ```
 ┌─────────────────────────────────────────────────┐
 │                 Streamlit UI                     │
-│         (Inbox · Detail · Compose)               │
+│    (Inbox · Cold Outreach · Compose)             │
 └──────────────────┬──────────────────────────────┘
                    │
 ┌──────────────────▼──────────────────────────────┐
@@ -34,8 +35,9 @@ AI-powered email management agent that triages, categorizes, summarizes, and dra
 │               │    │  │ Triage / Categorize  │ │
 │ • Local JSON  │    │  │ Reply Drafting       │ │
 │ • Gmail*      │    │  │ Thread Summarization │ │
-│ • IMAP*       │    │  └─────────────────────┘ │
-└───────────────┘    └────────┬────────────────┘
+│ • IMAP*       │    │  │ Cold Outreach        │ │
+└───────────────┘    │  └─────────────────────┘ │
+                     └────────┬────────────────┘
                               │
                    ┌──────────▼──────────┐
                    │    LLM Provider     │
@@ -48,10 +50,6 @@ AI-powered email management agent that triages, categorizes, summarizes, and dra
 ## 🚀 Quick Start
 
 ```bash
-# Clone
-git clone https://github.com/bludragon-ai/email-agent.git
-cd email-agent
-
 # Install
 make dev
 
@@ -63,7 +61,7 @@ cp .env.example .env
 make run
 ```
 
-Open [http://localhost:8501](http://localhost:8501)
+Open [http://localhost:8503](http://localhost:8503)
 
 ### Docker
 
@@ -79,7 +77,7 @@ make docker-up
 |---|---|---|
 | `LLM_PROVIDER` | `anthropic` | `anthropic` or `openai` |
 | `ANTHROPIC_API_KEY` | — | Anthropic API key |
-| `ANTHROPIC_MODEL` | `claude-sonnet-4-20250514` | Anthropic model name |
+| `ANTHROPIC_MODEL` | `claude-sonnet-4-6` | Anthropic model name |
 | `OPENAI_API_KEY` | — | OpenAI API key |
 | `OPENAI_MODEL` | `gpt-4o-mini` | OpenAI model name |
 | `LLM_TEMPERATURE` | `0.2` | LLM temperature |
@@ -90,13 +88,14 @@ make docker-up
 email-agent/
 ├── src/
 │   ├── agents/          # EmailAgent orchestrator
-│   ├── chains/          # LangChain chains (triage, reply, summarize)
+│   ├── chains/          # LangChain chains (triage, reply, summarize, cold_outreach)
 │   ├── models/          # Pydantic domain models
 │   ├── providers/       # Pluggable email backends
-│   ├── ui/              # Streamlit application
+│   ├── ui/              # Streamlit application (port 8503)
 │   └── utils/           # Configuration & helpers
 ├── tests/               # Unit tests
 ├── data/                # Sample email data
+├── requirements.txt     # Pinned dependencies
 ├── Dockerfile
 ├── docker-compose.yml
 ├── Makefile

@@ -2,6 +2,10 @@
 
 from __future__ import annotations
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 import streamlit as st
 
 from src.providers.local import LocalEmailProvider
@@ -29,7 +33,11 @@ agent = _agent()
 st.sidebar.title("📧 Email Agent")
 st.sidebar.caption("AI-powered email triage & management")
 
-view = st.sidebar.radio("View", ["Inbox", "Compose"], index=0)
+view = st.sidebar.radio("View", ["Inbox", "Cold Outreach", "Compose"], index=0)
+
+st.sidebar.divider()
+st.sidebar.markdown("**Model:** `claude-sonnet-4-6`")
+st.sidebar.markdown("**Provider:** Anthropic")
 
 CATEGORY_COLORS = {
     EmailCategory.URGENT: "🔴",
@@ -73,6 +81,10 @@ if view == "Inbox":
                 use_container_width=True,
             ):
                 st.session_state["selected_email"] = email.id
+                # Clear stale results when switching emails
+                st.session_state.pop("analysis", None)
+                st.session_state.pop("draft", None)
+                st.session_state.pop("thread_summary", None)
                 agent.mark_read(email.id)
         with col3:
             st.caption(email.date.strftime("%b %d %H:%M"))
@@ -91,18 +103,22 @@ if view == "Inbox":
             st.divider()
 
             # AI Analysis
-            if st.button("🤖 Analyze with AI", key="analyze_btn"):
+            if st.button("🤖 Analyze & Triage", key="analyze_btn"):
                 with st.spinner("Analyzing…"):
-                    analysis = agent.analyze(email.id)
+                    analysis = agent.analyze(email.id, force=True)
                 st.session_state["analysis"] = analysis
 
             analysis = st.session_state.get("analysis")
             if analysis and analysis.email_id == selected_id:
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.metric("Category", f"{CATEGORY_COLORS.get(analysis.category, '')} {analysis.category.value}")
+                    cat_icon = CATEGORY_COLORS.get(analysis.category, "")
+                    st.metric("Category", f"{cat_icon} {analysis.category.value}")
                 with col2:
-                    st.metric("Priority", PRIORITY_LABELS.get(analysis.priority, str(analysis.priority)))
+                    st.metric(
+                        "Priority",
+                        PRIORITY_LABELS.get(analysis.priority, str(analysis.priority)),
+                    )
 
                 st.info(f"**Summary:** {analysis.summary}")
                 if analysis.key_points:
@@ -117,6 +133,7 @@ if view == "Inbox":
             # Thread summary
             thread = agent.get_thread(email.thread_id)
             if len(thread) > 1:
+                st.caption(f"Thread: {len(thread)} messages")
                 if st.button("📝 Summarize Thread", key="summarize_btn"):
                     with st.spinner("Summarizing thread…"):
                         summary = agent.summarize_thread(email.thread_id)
@@ -128,7 +145,11 @@ if view == "Inbox":
 
             # Draft reply
             st.subheader("✍️ Draft Reply")
-            tone = st.selectbox("Tone", ["professional", "friendly", "formal", "concise", "apologetic"], key="tone_select")
+            tone = st.selectbox(
+                "Tone",
+                ["professional", "friendly", "formal", "concise", "apologetic"],
+                key="tone_select",
+            )
             extra = st.text_area("Additional instructions (optional)", key="reply_instructions")
             if st.button("Generate Reply", key="draft_btn"):
                 with st.spinner("Drafting reply…"):
@@ -137,8 +158,79 @@ if view == "Inbox":
 
             draft = st.session_state.get("draft")
             if draft and draft.email_id == selected_id:
+                st.markdown(f"**Subject:** {draft.subject}")
                 st.text_area("Draft", value=draft.body, height=200, key="draft_output")
                 st.caption(f"Confidence: {draft.confidence:.0%}")
+
+# ---------------------------------------------------------------------------
+# Cold Outreach View
+# ---------------------------------------------------------------------------
+
+elif view == "Cold Outreach":
+    st.title("🎯 Cold Outreach Generator")
+    st.caption("Generate personalized cold emails for any target and goal.")
+
+    with st.form("outreach_form"):
+        col1, col2 = st.columns(2)
+        with col1:
+            target = st.text_input(
+                "Target person",
+                placeholder="e.g. Sarah Chen, VP Product at ClientCo",
+            )
+            context = st.text_area(
+                "Their context / background",
+                placeholder=(
+                    "e.g. Just launched a new mobile product, posted about scaling "
+                    "challenges on LinkedIn, company raised Series B"
+                ),
+                height=120,
+            )
+        with col2:
+            goal = st.text_input(
+                "Your goal",
+                placeholder="e.g. Pitch my AI-powered analytics tool for their mobile team",
+            )
+            sender_name = st.text_input("Your name", placeholder="e.g. Alex")
+            tone = st.selectbox(
+                "Tone",
+                ["professional", "friendly", "direct", "consultative", "bold"],
+            )
+
+        submitted = st.form_submit_button("✨ Generate Cold Email", use_container_width=True)
+
+    if submitted:
+        if not target or not goal:
+            st.warning("Fill in at least the target person and your goal.")
+        else:
+            with st.spinner("Crafting your outreach email…"):
+                result = agent.generate_cold_outreach(
+                    target=target,
+                    context=context or "No additional context provided.",
+                    goal=goal,
+                    sender_name=sender_name or "Alex",
+                    tone=tone,
+                )
+            st.session_state["cold_outreach"] = result
+
+    result = st.session_state.get("cold_outreach")
+    if result:
+        st.divider()
+        st.subheader("Generated Email")
+
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            st.markdown(f"**Subject:** `{result.subject}`")
+        with col2:
+            st.caption(f"Tone: {result.tone}")
+
+        st.text_area("Body", value=result.body, height=250, key="outreach_body")
+
+        if result.hook:
+            st.info(f"**Opening hook:** {result.hook}")
+        if result.cta:
+            st.success(f"**Call to action:** {result.cta}")
+
+        st.caption("Tip: Copy the subject and body above, then personalize before sending.")
 
 # ---------------------------------------------------------------------------
 # Compose View

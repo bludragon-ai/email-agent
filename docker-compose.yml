@@ -2,7 +2,7 @@ services:
   email-agent:
     build: .
     ports:
-      - "8501:8501"
+      - "8503:8503"
     env_file:
       - .env
     volumes:

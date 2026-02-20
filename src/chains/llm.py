@@ -29,6 +29,6 @@ def get_llm() -> BaseChatModel:
     from langchain_anthropic import ChatAnthropic
 
     return ChatAnthropic(
-        model=os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514"),
+        model=os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-6"),
         temperature=temperature,
     )

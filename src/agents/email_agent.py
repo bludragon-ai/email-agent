@@ -4,11 +4,12 @@ from __future__ import annotations
 
 from typing import Optional
 
-from src.models.email import Email, EmailAnalysis, DraftReply
+from src.models.email import Email, EmailAnalysis, DraftReply, ColdOutreachEmail
 from src.providers.base import EmailProvider
 from src.chains.triage import triage_chain
 from src.chains.reply import reply_chain
 from src.chains.summarize import summarize_chain
+from src.chains.cold_outreach import cold_outreach_chain
 
 
 class EmailAgent:
@@ -58,6 +59,23 @@ class EmailAgent:
         if not thread:
             raise ValueError(f"Thread {thread_id} not found")
         return summarize_chain(thread)
+
+    def generate_cold_outreach(
+        self,
+        target: str,
+        context: str,
+        goal: str,
+        sender_name: str = "Alex",
+        tone: str = "professional",
+    ) -> ColdOutreachEmail:
+        """Generate a cold outreach email for a given target and goal."""
+        return cold_outreach_chain(
+            target=target,
+            context=context,
+            goal=goal,
+            sender_name=sender_name,
+            tone=tone,
+        )
 
     def mark_read(self, email_id: str) -> None:
         self.provider.mark_read(email_id)
