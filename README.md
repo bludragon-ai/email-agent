@@ -6,6 +6,10 @@ AI-powered email management agent that triages, categorizes, summarizes, and dra
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![LangChain](https://img.shields.io/badge/langchain-0.3-orange)
 
+## Demo
+
+![Email Agent Screenshot](docs/screenshot.png)
+
 ## ✨ Features
 
 - **Auto-categorization** — Classifies emails as urgent, client, routine, newsletter, or spam
