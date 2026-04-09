@@ -152,7 +152,7 @@ elif view == "Compose":
 
     if st.button("Send"):
         if to and subject and body:
-            agent.provider.send_email(to, subject, body)
+            agent.send_email(to, subject, body)
             st.success("Email sent (demo).")
         else:
             st.warning("Fill in all fields.")

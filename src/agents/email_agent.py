@@ -59,5 +59,9 @@ class EmailAgent:
             raise ValueError(f"Thread {thread_id} not found")
         return summarize_chain(thread)
 
+    def send_email(self, to: str, subject: str, body: str) -> dict:
+        """Send an email through the configured provider."""
+        return self.provider.send_email(to, subject, body)
+
     def mark_read(self, email_id: str) -> None:
         self.provider.mark_read(email_id)

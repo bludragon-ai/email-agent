@@ -20,3 +20,6 @@ docker-up:
 
 docker-down:
 	docker compose down
+
+setup: ## One-command project setup
+	python -m venv venv && . venv/bin/activate && pip install -e ".[dev]" && cp -n .env.example .env && echo "Ready! Edit .env with your API key, then: make run"
