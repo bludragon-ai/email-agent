@@ -14,6 +14,104 @@ from src.models.email import EmailCategory, EmailPriority
 
 st.set_page_config(page_title="Email Agent", page_icon="📧", layout="wide")
 
+st.markdown("""
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    .stApp { background-color: #000000; }
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+
+    [data-testid="stSidebar"] {
+        background-color: #0a0a0a;
+        border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    [data-testid="stSidebar"] .stMarkdown h1,
+    [data-testid="stSidebar"] .stMarkdown h2,
+    [data-testid="stSidebar"] .stMarkdown h3 {
+        font-family: 'JetBrains Mono', monospace;
+        color: #d4a853;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-weight: 500;
+    }
+
+    .stApp h1 { color: white; font-weight: 700; }
+    .stApp .stMarkdown p { color: #a3a3a3; }
+
+    .stButton > button {
+        background-color: rgba(212,168,83,0.1);
+        color: #d4a853;
+        border: 1px solid rgba(212,168,83,0.3);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: all 0.3s;
+    }
+    .stButton > button:hover {
+        background-color: rgba(212,168,83,0.2);
+        border-color: rgba(212,168,83,0.5);
+    }
+
+    /* Radio buttons for Inbox/Compose */
+    [data-testid="stRadio"] label {
+        font-family: 'Inter', sans-serif;
+        color: #737373;
+    }
+    [data-testid="stRadio"] label[data-selected="true"],
+    [data-testid="stRadio"] label:hover {
+        color: #d4a853;
+    }
+
+    /* Email cards in the main content */
+    [data-testid="stExpander"] {
+        background-color: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 12px;
+    }
+    [data-testid="stExpander"]:hover {
+        background-color: rgba(255,255,255,0.05);
+        border-color: rgba(212,168,83,0.2);
+    }
+
+    /* Form inputs */
+    .stTextInput input, .stTextArea textarea {
+        background-color: #111111 !important;
+        border: 1px solid rgba(255,255,255,0.08) !important;
+        color: #e5e5e5 !important;
+        font-family: 'Inter', sans-serif !important;
+    }
+    .stTextInput input:focus, .stTextArea textarea:focus {
+        border-color: rgba(212,168,83,0.3) !important;
+    }
+
+    hr { border-color: rgba(255,255,255,0.06) !important; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #000000; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+    /* Success/warning messages */
+    .stSuccess {
+        background-color: rgba(16,185,129,0.1) !important;
+        border: 1px solid rgba(16,185,129,0.3) !important;
+    }
+    .stWarning {
+        background-color: rgba(212,168,83,0.1) !important;
+        border: 1px solid rgba(212,168,83,0.3) !important;
+    }
+
+    [data-testid="stMetric"] label {
+        font-family: 'JetBrains Mono', monospace;
+        color: #d4a853;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 
 @st.cache_resource
 def _agent() -> EmailAgent:
@@ -26,6 +124,7 @@ agent = _agent()
 # Sidebar
 # ---------------------------------------------------------------------------
 
+st.sidebar.markdown('<p style="font-family: JetBrains Mono, monospace; color: #d4a853; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 4px;">Interactive Demo</p>', unsafe_allow_html=True)
 st.sidebar.title("📧 Email Agent")
 st.sidebar.caption("AI-powered email triage & management")
 
@@ -53,6 +152,7 @@ PRIORITY_LABELS = {
 
 if view == "Inbox":
     st.title("📥 Inbox")
+    st.markdown('<p style="font-family: JetBrains Mono, monospace; color: rgba(212,168,83,0.8); font-size: 0.85rem;">AI Email Triage & Automation</p>', unsafe_allow_html=True)
 
     emails = agent.inbox(limit=50)
 
