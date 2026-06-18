@@ -97,8 +97,7 @@ email-agent/
 │   ├── chains/          # LangChain chains (triage, reply, summarize)
 │   ├── models/          # Pydantic domain models
 │   ├── providers/       # Pluggable email backends
-│   ├── ui/              # Streamlit application
-│   └── utils/           # Configuration & helpers
+│   └── ui/              # Streamlit application
 ├── tests/               # Unit tests
 ├── data/                # Sample email data
 ├── Dockerfile
